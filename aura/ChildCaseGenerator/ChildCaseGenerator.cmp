@@ -1,0 +1,64 @@
+<aura:component controller="ChildCaseGeneratorController" implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId">
+  <!-- ATTRIBUTES -->
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="selectedTemplate" type="String" />
+  <aura:attribute name="case" type="Case" />
+  <aura:attribute name="caseString" type="String" />
+  <aura:attribute name="queues" type="List" />
+  <aura:attribute name="templates" type="List" />
+  <aura:attribute name="templateMap" type="Object" />
+  <!-- /ATTRIBUTES -->
+
+  <!-- HANDLERS -->
+  <aura:handler name="init" value="{! this }" action="{! c.init }" />
+  <!-- /HANDLERS -->
+
+  <aura:html tag="style">
+      .cuf-scroller-outside {
+      background: rgb(255, 255, 255) !important; 
+      }
+  </aura:html>
+  <!-- CONTAINER -->
+  <div class="slds-box">
+    <!-- FORM HEADING -->
+    <div class="slds-text-align_center slds-text-heading_medium">
+        Create Child Case
+    </div>
+    <!-- /FORM HEADING -->
+
+    <!-- FORM CONTENT -->
+    <div class="slds-form">
+      <!-- QUEUE SELECT -->
+      <lightning:select label="Case Queue" value="{! v.caseString }">
+        <option text="-- Select Queue --" value="" />
+        <aura:iteration items="{! v.queues }" var="item">
+          <option text="{! item.Queue.Name }" value="{! item.Queue.Name }" />
+        </aura:iteration>
+      </lightning:select>
+      <!-- /QUEUE SELECT -->
+
+      <!-- TEMPLATE SELECT -->
+      <lightning:select label="Case Template" value="{! v.selectedTemplate }" onchange="{! c.setData }">
+        <option text="-- Select Template --" value="" />
+        <aura:iteration items="{! v.templates }" var="item">
+            <option text="{! item.label }" value="{! item.value }" />
+        </aura:iteration>
+      </lightning:select>
+      <!-- /TEMPLATE SELECT -->
+
+      <!-- CASE SUBJECT -->
+      <lightning:input label="Case Subject" value="{! v.case.Subject }" />
+      <!-- /CASE SUBJECT -->
+
+      <!-- CASE DESCRIPTION -->
+      <lightning:textarea label="Case Description" value="{! v.case.Description }" />
+      <!-- /CASE DESCRIPTION -->
+
+      <!-- SUBMIT BUTTON -->
+      <lightning:button label="Submit" variant="brand" onclick="{! c.createCase }" disabled="{! or(v.selectedTemplate == '', v.caseString == '') }" />
+      <!-- SUBMIT BUTTON -->
+    </div>
+    <!-- /FORM CONTENT -->
+  </div>
+  <!-- /CONTAINER -->
+</aura:component>

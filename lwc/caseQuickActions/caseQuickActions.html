@@ -1,0 +1,28 @@
+<template>
+    <lightning-card  variant="Base" title="Quick Actions" icon-name="standard:custom_notification">
+        <lightning-button-group class="slds-m-horizontal--medium slds-align--absolute-center">
+            <template if:true={showCloseCaseButton}>
+                <lightning-button
+                    label="Close Case"
+                    disabled={isStatusClosed}
+                    onclick={handleCloseCase}
+                ></lightning-button>
+            </template>
+
+            <template if:true={showAssignToMeButton}>
+                <lightning-button
+                    label="Assign to me"
+                    disabled={isAssignedToMe}
+                    onclick={handleAssignToMe}
+                ></lightning-button>
+            </template>
+
+            <template if:true={showPhoneOptOutButton}>
+                <lightning-button
+                    label={PhoneOptInOutLabel}
+                    onclick={handlePhoneOptOut}
+                ></lightning-button>
+            </template>
+        </lightning-button-group>
+    </lightning-card>
+</template>

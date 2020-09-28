@@ -1,0 +1,36 @@
+.s1 svg path {
+    fill: #d8d8d8;
+}
+.s1 svg circle {
+    fill: none;
+}
+.s1 svg path.tick {
+    fill: none;
+}
+
+.s2 svg path.tick {
+    fill: none;
+}
+
+.s3 svg circle {
+    fill: none;
+}
+
+
+
+.r1 svg circle.dot {
+    fill: #2196f3;
+}
+.r1 svg path.circle {
+    fill: #2196f3;
+}
+
+.r2 svg path.circle {
+    fill: #7c7c7c;
+}
+.r2 svg circle {
+    fill: none;
+}
+.r2 svg path.tick {
+    fill: none;
+}

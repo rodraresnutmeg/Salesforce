@@ -1,0 +1,206 @@
+<aura:component
+    access="global"
+    implements="lightning:availableForFlowScreens"
+    controller="SendNutmailFlowCtrl"
+>
+
+    <!-- Determine which actions are available -->
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+
+    <aura:attribute name="canPause"                 type="Boolean"  />
+    <aura:attribute name="canBack"                  type="Boolean"  />
+    <aura:attribute name="canNext"                  type="Boolean"  />
+    <aura:attribute name="canFinish"                type="Boolean"  />
+    <aura:attribute name="isExistEmailTemplates"    type="Boolean"  default="true"  />
+    <aura:attribute name="emailTemplatesMap"        type="Map"      />
+    <aura:attribute name="emailTemplates"           type="Object"   />
+    <aura:attribute name="emailTemplatesView"       type="Object"   />
+    <aura:attribute name="footerTemplate"           type="Object"   />
+    <aura:attribute name="emailBody"                type="String"   access="global" />
+    <aura:attribute name="currentRecord"            type="String"   access="global" />
+    <aura:attribute name="caseSubject"              type="String"   access="global" />
+    <aura:attribute name="searchValue"              type="String"   />
+
+    <aura:attribute name="showEmailTemplateList"    type="Boolean"  default="false" />
+    <aura:attribute name="items"                    type="List"     default=""      />
+
+    <aura:attribute name="filetype"                 type="List"     default="" />
+    <aura:attribute name="multiple"                 type="Boolean"  default="false" />
+    <aura:attribute name="disabled"                 type="Boolean"  default="true" />
+    <aura:attribute name="attachmentName"           type="String"   default="" />
+    <aura:attribute name="conversationId"           type="String"   default="" />
+    <aura:attribute name="messageId"           type="String"   default="" />
+    <aura:attribute name="userUid"           type="String"   default="" />
+    <aura:attribute name="attachmentId"             type="String"   default="" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    {!subjet}
+    <div aura:id="actionButtonBar" class="slds-clearfix slds-p-top_medium">
+       
+        <lightning:input
+            aura:id="subjectId"
+            name="input1"
+            label="Subject"
+            required="true"
+            messageWhenValueMissing="This field is required."
+            maxlength="300"
+            onchange="{!c.handleSubject}"
+
+        />
+
+        <lightning:textarea
+                aura:id="nutmailBody"
+                name="input1"
+                label="Email Body"
+                required="true"
+                class="email-body-height"
+        />
+        <div>
+
+            <aura:if isTrue="{!v.isExistEmailTemplates}">
+                <aura:if isTrue="{!empty(v.items)}">
+                    <lightning:input
+                        label="Email Template"
+                        value="{!v.searchValue}"
+                        onfocus="{!c.onFocusEmailTemplateInput}"
+                        onblur="{!c.onBlurEmailTemplateInput}"
+                        onchange="{!c.handleSearch}"
+                    />
+
+                    <aura:if isTrue="{!v.showEmailTemplateList}">
+                        <ul style="max-height: 150px; margin-top: 2px;" class="slds-scrollable_y slds-box_border slds-listbox slds-listbox_vertical" role="presentation">
+                            <aura:if isTrue="{!not(empty(v.emailTemplatesView))}">
+                                <aura:iteration items="{!v.emailTemplatesView}" var="item" indexVar="index" >
+                                    <li id="{!item.emailTemplateId}" class="slds-listbox__item" onclick="{!c.onPicklistChange}">
+                                        <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta">
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                                    <span>
+                                                        {!item.emailTemplateName}
+                                                    </span>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </aura:iteration>
+
+                                <aura:set attribute="else">
+                                    <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta">
+                                    <span class="slds-media__body">
+                                        <span class="slds-listbox__option-text slds-listbox__option-text_entity">
+                                            <span>
+                                                No items in the list
+                                            </span>
+                                        </span>
+                                    </span>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+                        </ul>
+                    </aura:if>
+
+                    <aura:set attribute="else">
+                        <label class="slds-form-element__label slds-no-flex">
+                            Email Template
+                        </label>
+
+                        <lightning:pillContainer
+                            title="Email Template"
+                            singleLine="true"
+                            label="Email Template"
+                            items="{!v.items}"
+                            onitemremove="{!c.handleItemRemove}"
+                        />
+                    </aura:set>
+                </aura:if>
+
+                <aura:set attribute="else">
+                    <ui:message
+                        title="{!$Label.c.Send_Nutmail_Info_Header}"
+                        severity="info">{!$Label.c.Send_Nutmail_Info_Body} 
+                    </ui:message>
+                </aura:set>
+            </aura:if>
+
+            <br/>
+
+            <aura:if isTrue="{!v.canBack}">
+                <lightning:button
+                    aura:id="BACK"
+                    label="Previous"
+                    variant="neutral"
+                    onclick="{!c.onButtonPressed}"
+                />
+            </aura:if>
+
+        </div>
+
+        <div class="slds-float_left">
+            <aura:if isTrue="{!v.currentRecord}">
+                <aura:if isTrue="{! empty(v.attachmentId)}">
+                    <lightning:fileUpload
+                            label="Add Attachment"
+                            name="fileUploader"
+                            multiple="{!v.multiple}"
+                            disabled="false"
+                            accept="{!v.filetype}"
+                            recordId="{!v.currentRecord}"
+                            onuploadfinished="{!c.handleUploadFinished}"
+                    />
+
+                    <aura:set attribute="else">
+                        <b>Attachment file name:</b>
+                        <br/>
+                        {!v.attachmentName}
+                        <br/>
+                        <lightning:button
+                                aura:id="REMOVE-ATTACH"
+                                label="Remove attachment"
+                                variant="brand"
+                                onclick="{!c.onRemoveAttachment}"
+                        />
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+        </div>
+        <aura:if isTrue="{!v.spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <div class="slds-float_right">
+            <!-- If Pause, Next, or Finish are available, display to the right -->
+            <aura:if isTrue="{!v.canPause}">
+                <lightning:button
+                        aura:id="PAUSE"
+                        label="Pause"
+                        variant="neutral"
+                        onclick="{!c.onButtonPressed}"
+                />
+            </aura:if>
+
+            <aura:if isTrue="{!v.canNext}">
+                <lightning:button
+                        aura:id="NEXT"
+                        label="Send"
+                        variant="brand"
+                        onclick="{!c.onButtonPressed}"
+                />
+            </aura:if>
+
+            <aura:if isTrue="{!v.canFinish}">
+                <lightning:button
+                        aura:id="FINISH"
+                        label="Done"
+                        variant="brand"
+                        onclick="{!c.onButtonPressed}"
+                />
+            </aura:if>
+        </div>
+    </div>
+
+</aura:component>

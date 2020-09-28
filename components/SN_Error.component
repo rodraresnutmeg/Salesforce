@@ -1,0 +1,25 @@
+<apex:component layout="none">
+  <div class="container-divider"></div>
+  <div class="error-page">
+    <h1>{!$Label.SN_Error_Oops}</h1>
+
+    {{#is error 'unauthorized'}}
+      <h2>{{link 'sign_in'}}</h2>
+    {{/is}}
+
+    {{#is error 'forbidden'}}
+      <h2>{!$Label.SN_Error_Not_Auth}</h2>
+    {{/is}}
+
+    {{#is error 'not_found'}}
+      <h2>{!$Label.SN_Error_Nonexistent}</h2>
+      <p>{!$Label.SN_Error_Nonexistent_Text}</p>
+    {{/is}}
+
+    <!-- {{#link 'help_center'}}
+      {{t 'back_to_homepage'}}
+    {{/link}} -->
+    <br/>
+    <a href="{!URLFOR($Page.SN_Layout)}" class="submit-a-request">{!$Label.SN_Back_to_Homepage}</a>
+  </div>
+</apex:component>

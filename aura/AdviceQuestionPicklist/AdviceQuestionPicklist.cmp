@@ -1,0 +1,42 @@
+<aura:component description="AdviceQuestionPicklist">
+
+    <aura:attribute name="option"       type="String"   default=""  />
+    <aura:attribute name="index"        type="Integer"  default=""  />
+    <aura:attribute name="answer"       type="String"   default=""  />
+
+    <aura:attribute name="isReadMode"   type="Boolean"  default="false" />
+
+    <aura:attribute name="isCustomAnswer"       type="Boolean"  default="false" />
+    <aura:attribute name="customAnswerType"     type="String"   default="" />
+
+<!--    <aura:attribute name="isCustomAnswer"   type="Boolean"  default="false" />-->
+    <aura:attribute name="customAnswer"     type="String"   default=""  />
+
+    <li class="nk-radio-input__list-item">
+        <div class="nk-radio-input" role="radio" aria-checked="false">
+            <input
+                    type="radio"
+                    name="{!'option-' + v.index}"
+                    class="nk-radio-input__input"
+                    id="{!globalId + '-about_choice-' + v.index}"
+                    value="{!'choice-' + v.index}"
+                    onclick="{!c.chooseOption}"
+            />
+
+            <label for="{!globalId + '-about_choice-' + v.index}" class="nk-radio-input__label">
+                <div class="nk-radio-input__body">
+                    {!v.option}
+                </div>
+
+                <div class="nk-radio-input__visual">
+                    <div class="nk-accessibility__group" style="transform: scale(1);"></div>
+                    <c:svgCmp
+                        type="{!if(v.option == v.answer, 'r1', 'r2')}"
+                        svgClass="nk-icon nk-radio-input__icon nk-icon--size-sm nk-icon--color-nutmeg-green"
+                    />
+                </div>
+            </label>
+        </div>
+    </li>
+
+</aura:component>

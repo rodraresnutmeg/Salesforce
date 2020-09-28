@@ -1,0 +1,43 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "c/caseDetail": [
+                "caseDetail/caseDetail.js"
+            ],
+            "c/caseQuickActions": [
+                "caseQuickActions/caseQuickActions.js"
+            ],
+            "c/exportFactfind": [
+                "exportFactfind/exportFactfind.js"
+            ],
+            "c/liveChat": [
+                "liveChat/liveChat.js"
+            ],
+            "c/svgCmp": [
+                "svgCmp/svgCmp.js"
+            ],
+            "c/wrapper": [
+                "wrapper/wrapper.js"
+            ],
+            "c/jhxlsx": [
+                "../resource-bundles/SheetJS.resource.application.x-zip-compressed/SheetJS/jhxlsx/jhxlsx.js"
+            ]
+        },
+        "experimentalDecorators": true
+    },
+    "include": [
+        "**/*",
+        "../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    },
+    "paths": {
+        "c/*": [
+            "*"
+        ]
+    }
+}

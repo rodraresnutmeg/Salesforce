@@ -1,0 +1,348 @@
+<aura:component description="AdviceQuestionCmp">
+
+    <aura:attribute name="header"               type="String"   default="" />
+    <aura:attribute name="questionData"         type="Object"   default="" />
+    <aura:attribute name="picklistOptions"      type="String[]" default="" />
+
+    <aura:attribute name="mainCmp"              type="Aura.Component" default="" />
+
+    <aura:attribute name="isValid"              type="Boolean"  default="true" />
+    <aura:attribute name="isInner"              type="Boolean"  default="false" />
+
+    <aura:attribute name="isReviewMode"         type="Boolean"  default="false" />
+    <aura:attribute name="isReadMode"           type="Boolean"  default="false" />
+
+    <aura:attribute name="isOriginal"           type="Boolean"  default="false" />
+    <aura:attribute name="isAnswerChanged"      type="Boolean"  default="false" />
+
+    <aura:handler name="init"       action="{!c.doInit}"                value="{!this}" />
+    <aura:handler name="change"     action="{!c.handleAnswerChange}"    value="{!v.questionData.answer}" />
+
+    <div class="nk-row">
+        <div class="{!if(v.isInner, 'slds-col', 'nk-col-md-12 nk-col-lg-8 offset-lg-2')}">
+            <aura:if isTrue="{!not(empty(v.header))}">
+                <h1 class="nk-text nk-heading nk-text--style-title-1 nk-text--color-dark nk-text--tag-h1">
+                    <span class="nk-heading__children">
+                        {!v.header}
+                    </span>
+                </h1>
+            </aura:if>
+
+            <section class="nk-panel nk-panel__space--inset--lg" style="{!if(v.isOriginal, 'background-color: #999;', '')}">
+                <div class="nk-panel__body">
+                    <h2 class="nk-text nk-heading nk-text--color-dark nk-text--tag-h2" style="font-size: 16pt;">
+                        <span class="nk-heading__children">
+                            {!v.questionData.label}
+                        </span>
+                    </h2>
+
+                    <aura:if isTrue="{!and(v.isAnswerChanged, notequals(v.questionData.answerOriginal, undefidned))}">
+                        <div style="padding: 10px; background-color: #a4ddb3;">
+                            User answer: {!v.questionData.answerOriginal}
+                        </div>
+                    </aura:if>
+
+<!-- TEXT -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Text'}">
+                        <div class="nk-input">
+                            <div class="nk-input__element">
+                                <lightning:input
+                                        autocomplete="off"
+                                        readonly="{!v.isReadMode}"
+                                        type="text"
+                                        name="text"
+                                        variant="label-hidden"
+                                        value="{!v.questionData.answer}"
+                                />
+                                <div class="nk-input__state-icon">
+                                </div>
+                            </div>
+
+                            <div class="nk-input__state"></div>
+                        </div>
+                    </aura:if>
+
+<!-- TEXTAREA -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Textarea'}">
+                        <div class="nk-input">
+                            <div class="nk-input__element">
+                                <lightning:textarea
+                                        autocomplete="off"
+                                        readonly="{!v.isReadMode}"
+                                        name="textarea"
+                                        variant="label-hidden"
+                                        value="{!v.questionData.answer}"
+                                />
+                                <div class="nk-input__state-icon">
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+
+<!-- NUMERIC -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Numeric'}">
+                        <div class="nk-input">
+                            <div class="nk-input__element">
+                                <lightning:input
+                                        autocomplete="off"
+                                        readonly="{!v.isReadMode}"
+                                        type="number"
+                                        name="number"
+                                        variant="label-hidden"
+                                        value="{!v.questionData.answer}"
+                                />
+                                <div class="nk-input__state-icon">
+                                </div>
+                            </div>
+
+                            <div class="nk-input__state"></div>
+                        </div>
+                    </aura:if>
+
+<!-- COUNTRY -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Country'}">
+                        <div class="nk-input">
+                            <lightning:select disabled="{!v.isReadMode}" name="country" value="{!v.questionData.answer}">
+                                <option value="">
+                                    Select country
+                                </option>
+                                <option value="United Kingdom">
+                                    United Kingdom <!--TODO move to label-->
+                                </option>
+
+                                <aura:iteration items="{!v.picklistOptions}" var="item">
+                                    <option value="{!item}">
+                                        {!item}
+                                    </option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </aura:if>
+
+<!-- DATE -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Date'}">
+
+                        <aura:if isTrue="{!v.questionData.subtype}">
+                            <aura:if isTrue="{!v.questionData.subtype=='Birthday'}">
+                                <c:AdviceQuestionDatePicklist />
+<!--                                <div>-->
+<!--                                    <div class="nk-input">-->
+<!--                                        <div class="nk-input__element">-->
+<!--                                            <lightning:input-->
+<!--                                                    autocomplete="off"-->
+<!--                                                    readonly="{!v.isReadMode}"-->
+<!--                                                    type="number"-->
+<!--                                                    name="number"-->
+<!--                                                    min="1"-->
+<!--                                                    max="31"-->
+<!--                                                    label="Day"-->
+<!--                                                    value="{!v.questionData.day}"-->
+<!--                                                    onchange="{!c.handleDateChange}"-->
+<!--                                            />-->
+<!--                                            <div class="nk-input__state-icon"></div>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="nk-input__state"></div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="nk-input">-->
+<!--                                        <div class="nk-input__element">-->
+<!--                                            <lightning:input-->
+<!--                                                    autocomplete="off"-->
+<!--                                                    readonly="{!v.isReadMode}"-->
+<!--                                                    type="number"-->
+<!--                                                    name="number"-->
+<!--                                                    min="1"-->
+<!--                                                    max="12"-->
+<!--                                                    label="Month"-->
+<!--                                                    value="{!v.questionData.month}"-->
+<!--                                                    onchange="{!c.handleDateChange}"-->
+<!--                                            />-->
+<!--                                            <div class="nk-input__state-icon"></div>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="nk-input__state"></div>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="nk-input">-->
+<!--                                        <div class="nk-input__element">-->
+<!--                                            <lightning:input-->
+<!--                                                    autocomplete="off"-->
+<!--                                                    readonly="{!v.isReadMode}"-->
+<!--                                                    type="number"-->
+<!--                                                    name="number"-->
+<!--                                                    min="1900"-->
+<!--                                                    max="2019"-->
+<!--                                                    label="Year"-->
+<!--                                                    value="{!v.questionData.year}"-->
+<!--                                                    onchange="{!c.handleDateChange}"-->
+<!--                                            />-->
+<!--                                            <div class="nk-input__state-icon"></div>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="nk-input__state"></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                                <aura:if isTrue="{!not(v.isValid)}">
+                                    <div>
+                                        Date not valid
+                                    </div>
+                                </aura:if>
+
+                                <div class="nk-input slds-hide">
+                                    <div class="nk-input__element">
+                                        <lightning:input
+                                                autocomplete="off"
+                                                readonly="{!v.isReadMode}"
+                                                aura:id="birthday"
+                                                type="date"
+                                                name="date"
+                                                variant="label-hidden"
+                                                pattern=""
+                                                value="{!v.questionData.answer}"
+                                                onchange="{!c.handleDateChange}"
+                                        />
+                                    </div>
+
+                                    <div class="nk-input__state"></div>
+                                </div>
+
+                                <aura:set attribute="else">
+                                    <div class="nk-input">
+                                        <lightning:select disabled="{!v.isReadMode}" name="year" value="{!v.questionData.answer}">
+                                            <aura:if isTrue="{!not(v.questionData.defaultOptions)}">
+                                                <option value="">
+                                                    Select value
+                                                </option>
+                                            </aura:if>
+
+                                            <aura:iteration items="{!v.picklistOptions}" var="item">
+                                                <option value="{!item}">
+                                                    {!item}
+                                                </option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </aura:set>
+
+                            </aura:if>
+
+                            <aura:set attribute="else">
+                                <div class="nk-input">
+                                    <div class="nk-input__element">
+                                        <lightning:input
+                                                autocomplete="off"
+                                                readonly="{!v.isReadMode}"
+                                                type="date"
+                                                name="date"
+                                                variant="label-hidden"
+                                                value="{!v.questionData.answer}"
+                                        />
+                                    </div>
+
+                                    <div class="nk-input__state"></div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+
+                    </aura:if>
+
+<!-- PICKLIST -->
+
+                    <aura:if isTrue="{!v.questionData.type=='Picklist'}">
+                        <ol class="nk-radio-group nk-radio-group__space--inset--md nk-radio-group__list-style--underline" role="radiogroup">
+                            <aura:iteration items="{!v.questionData.options}" var="option" indexVar="index">
+                                <c:AdviceQuestionPicklist
+                                    option="{#option}"
+                                    index="{#index}"
+                                    isReadMode="{!v.isReadMode}"
+                                    answer="{!v.questionData.answer}"
+                                />
+                            </aura:iteration>
+                        </ol>
+                    </aura:if>
+
+<!-- DEPEND QUESTIONS -->
+
+                    <aura:if isTrue="{!
+                        and(
+                            v.questionData.hasDependent,
+                            or(
+                                and(
+                                    v.questionData.dependentQuestionsCondition,
+                                    v.questionData.dependentQuestionsCondition == v.questionData.answer
+                                ),
+                                and(
+                                    v.questionData.dependentQuestionsConditionNotNull,
+                                    v.questionData.answer != ''
+                                )
+                            )
+                        )
+                    }">
+                        <aura:iteration items="{!v.questionData.dependentQuestions}" var="questionData" indexVar="index">
+                            <c:AdviceQuestionCmp
+                                    questionData="{!questionData}"
+                                    isInner="true"
+                                    isReadMode="{!v.isReadMode}"
+                                    isReviewMode="{!v.isReviewMode}"
+                                    mainCmp="{!v.mainCmp}"
+                            />
+                        </aura:iteration>
+                    </aura:if>
+
+<!--COMPLEX-->
+
+                    <aura:if isTrue="{!v.questionData.isComplex}">
+                        <aura:if isTrue="{!v.questionData.isMultiple}">
+                            <div style="padding: 10px; background-color: #a7d3f7;">
+                                <span>
+                                    Answers:
+                                </span>
+
+                                <aura:iteration items="{!v.questionData.innerAnswers}" var="answers" indexVar="index">
+                                    <br/>
+                                    {!index+1}:
+                                    <aura:iteration items="{!answers}" var="answer" indexVar="index2">
+                                        <aura:iteration items="{!answer}" var="innerAnswer" indexVar="index3">
+                                            <aura:iteration items="{!innerAnswer}" var="innerAnswer2" indexVar="index4">
+                                                {!innerAnswer2}
+                                            </aura:iteration>
+                                        </aura:iteration>
+                                    </aura:iteration>
+                                </aura:iteration>
+                            </div>
+                        </aura:if>
+
+                        <aura:iteration items="{!v.questionData.innerQuestions}" var="questionData" indexVar="index">
+                            <c:AdviceQuestionCmp
+                                questionData="{!questionData}"
+                                isInner="true"
+                                isReadMode="{!v.isReadMode}"
+                                isReviewMode="{!v.isReviewMode}"
+                                mainCmp="{!v.mainCmp}"
+                            />
+                        </aura:iteration>
+
+                        <aura:if isTrue="{!and(v.questionData.isMultiple, not(v.isReadMode))}">
+                            <section class="nk-button-group nk-button-group--right nk-button-group--stack-up">
+                                <button class="nk-button nk-button--md nk-button--primary" type="button" onclick="{!c.addAnswer}">
+                                    <div class="nk-button__children">
+                                        Add answer <!-- TODO move to label-->
+                                    </div>
+                                </button>
+                            </section>
+                        </aura:if>
+                    </aura:if>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</aura:component>

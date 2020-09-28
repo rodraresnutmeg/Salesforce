@@ -1,0 +1,159 @@
+<aura:component
+        description="AdviceFactFindCmp"
+        controller="FactFindCtrl"
+        implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+>
+
+    <aura:attribute name="answerId"     type="String"  default="{!null}" />
+    <aura:attribute name="caseId"       type="String"  default="{!null}" />
+
+    <aura:attribute name="step"         type="Integer"  default="0" />
+    <aura:attribute name="questions"    type="String[]" default="" />
+    <aura:attribute name="stepsList"    type="String[]" default="" />
+    <aura:attribute name="allQuestions" type="Object"   default="{!null}" />
+
+    <aura:attribute name="prepage"      type="Object"   default="{}" />
+    <aura:attribute name="isPrepage"    type="Boolean"  default="true" />
+
+    <aura:attribute name="loader"           type="Boolean"  default="false" />
+    <aura:attribute name="countriesList"    type="String[]" default="" />
+
+    <aura:attribute name="isReviewMode"     type="Boolean"  default="false" />
+    <aura:attribute name="isReadMode"       type="Boolean"  default="false" />
+    <aura:attribute name="isSubmitted"      type="Boolean"  default="false" />
+
+    <aura:handler name="init"       action="{!c.doInit}"        value="{!this}" />
+    <aura:handler name="change"     action="{!c.handleStep}"    value="{!v.step}" />
+
+    <div class="nk-container" aura:id="cont">
+        <c:AdviceProgressSteps step="{!v.step}" stepsList="{!v.stepsList}" />
+
+        <aura:if isTrue="{!v.loader}">
+            <div class="nk-row">
+                <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                    LOADING... <!-- TODO change to some spinner-->
+                </div>
+            </div>
+
+            <aura:set attribute="else">
+
+                <aura:if isTrue="{!v.isPrepage}">
+                    <div class="nk-row">
+                        <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                            <section class="nk-panel nk-panel__space--inset--lg">
+                                <div class="nk-panel__body">
+                                    <div class="" style="white-space: pre-wrap; font-size: 16pt;">
+                                        {!v.prepage.text}
+                                    </div>
+
+                                    <section class="nk-button-group nk-button-group--stack-up nk-button-group--right">
+                                        <button class="nk-button nk-button--md nk-button--primary" type="button" onclick="{!c.nextPrepage}">
+                                            <div class="nk-button__children">
+                                                Continue <!-- TODO move to label-->
+                                            </div>
+                                        </button>
+                                    </section>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <aura:if isTrue="{!v.isReviewMode}">
+                    <div class="nk-row">
+                        <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                            <section class="nk-button-group nk-button-group--stack-up nk-button-group--center">
+                                <aura:if isTrue="{!v.isReadMode}">
+                                    <button class="nk-button nk-buttoln--md nk-button--primary nk-button--block" type="button" onclick="{!c.saveEditToggle}">
+                                        <div class="nk-button__children">
+                                            Edit <!-- TODO move to label-->
+                                        </div>
+                                    </button>
+
+                                    <aura:set attribute="else">
+                                        <button class="nk-button nk-buttoln--md nk-button--primary nk-button--block" type="button" onclick="{!c.sendAnswers}">
+                                            <div class="nk-button__children">
+                                                Save <!-- TODO move to label-->
+                                            </div>
+                                        </button>
+                                    </aura:set>
+                                </aura:if>
+                            </section>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <div class="{!if(v.isPrepage, 'slds-hide', '')}">
+                    <aura:iteration items="{!v.questions}" var="questionData" indexVar="index">
+                        <c:AdviceQuestionCmp
+                            questionData="{!questionData}"
+                            mainCmp="{!this}"
+                            isReadMode="{!v.isReadMode}"
+                            isReviewMode="{!v.isReviewMode}"
+                        />
+                    </aura:iteration>
+
+                    <div class="nk-row">
+                        <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                            <section class="{!'nk-button-group nk-button-group--stack-up ' + if(equals(v.step, 0), 'nk-button-group--right', 'nk-button-group--justify')}">
+                                <aura:if isTrue="{! not(equals(v.step, 0))}">
+                                    <button class="nk-button nk-buttoln--md nk-button--secondary" type="button" onclick="{!c.backStep}">
+                                        <div class="nk-button__children">
+                                            Back <!-- TODO move to label-->
+                                        </div>
+                                    </button>
+                                </aura:if>
+
+
+                                <aura:if isTrue="{! lessthan(v.step, v.allQuestions.lastPageIndex)}">
+                                    <button class="nk-button nk-button--md nk-button--primary" type="button" onclick="{!c.nextStep}">
+                                        <div class="nk-button__children">
+                                            Continue <!-- TODO move to label-->
+                                        </div>
+                                    </button>
+
+                                    <aura:set attribute="else">
+                                        <aura:if isTrue="{!and(not(v.isReadMode), not(v.isReviewMode))}">
+                                            <button class="nk-button nk-button--md nk-button--primary" type="button" onclick="{!c.sendAnswers}">
+                                                <div class="nk-button__children">
+                                                    Submit <!-- TODO move to label-->
+                                                </div>
+                                            </button>
+                                        </aura:if>
+                                    </aura:set>
+                                </aura:if>
+                            </section>
+                        </div>
+                    </div>
+
+                    <aura:if isTrue="{!v.isReviewMode}">
+                        <div class="nk-row">
+                            <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                                <section class="nk-button-group nk-button-group--stack-up nk-button-group--center">
+                                    <aura:if isTrue="{!v.isReadMode}">
+                                        <button class="nk-button nk-buttoln--md nk-button--primary nk-button--block" type="button" onclick="{!c.saveEditToggle}">
+                                            <div class="nk-button__children">
+                                                Edit <!-- TODO move to label-->
+                                            </div>
+                                        </button>
+
+                                        <aura:set attribute="else">
+                                            <button class="nk-button nk-buttoln--md nk-button--primary nk-button--block" type="button" onclick="{!c.sendAnswers}">
+                                                <div class="nk-button__children">
+                                                    Save <!-- TODO move to label-->
+                                                </div>
+                                            </button>
+                                        </aura:set>
+                                    </aura:if>
+                                </section>
+                            </div>
+                        </div>
+                    </aura:if>
+
+                </div>
+
+            </aura:set>
+        </aura:if>
+    </div>
+
+</aura:component>

@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>If country code changes</label>
+        </rules>
+    </decisions>
+    <description>Create a case when customer address changes to a non-EU/EAA one</description>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>ISCHANGED([Account].PersonMailingCountry ) 
+&amp;&amp;
+NOT(ISNULL([Account].PersonMailingCountry))
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;United Kingdom&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Austria&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Belgium&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Croatia&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Cyprus&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Czech Republic&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Denmark&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Estonia&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Finland&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;France&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Germany&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Greece&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Hungary&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Ireland&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Italy&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Latvia&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Lithuania&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Luxembourg&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Malta&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Netherlands&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Poland&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Portugal&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Romania&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Slovakia&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Slovenia&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Spain&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Sweden&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Iceland&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Liechtenstein&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Norway&quot;
+&amp;&amp;
+[Account].PersonMailingCountry &lt;&gt; &quot;Switzerland&quot;
+
+</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>ISCHANGED({!myVariable_current.PersonMailingCountry} ) 
+&amp;&amp;
+NOT(ISNULL({!myVariable_current.PersonMailingCountry}))
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;United Kingdom&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Austria&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Belgium&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Croatia&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Cyprus&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Czech Republic&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Denmark&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Estonia&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Finland&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;France&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Germany&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Greece&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Hungary&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Ireland&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Italy&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Latvia&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Lithuania&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Luxembourg&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Malta&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Netherlands&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Poland&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Portugal&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Romania&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Slovakia&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Slovenia&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Spain&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Sweden&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Iceland&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Liechtenstein&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Norway&quot;
+&amp;&amp;
+{!myVariable_current.PersonMailingCountry} &lt;&gt; &quot;Switzerland&quot;</expression>
+    </formulas>
+    <interviewLabel>Address_change_to_Non_EU_EAA-7_InterviewLabel</interviewLabel>
+    <label>Address change to Non EU/EAA</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Account</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordCreates>
+        <name>myRule_1_A1</name>
+        <label>Create case</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Business Hours ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>BusinessHoursId</field>
+            <value>
+                <stringValue>01m4J0000008xco</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ContactId</field>
+            <value>
+                <elementReference>myVariable_current.PersonContact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Description</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Description</field>
+            <value>
+                <elementReference>myVariable_current.PersonMailingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Owner ID</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue>Group;User</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideLabel</name>
+                <value>
+                    <stringValue>Front_line</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Queue</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>OwnerId</field>
+            <value>
+                <stringValue>00G0C000000WR4sUAG</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Status</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Status</field>
+            <value>
+                <stringValue>Open</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Subject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Subject</field>
+            <value>
+                <stringValue>Address changed - nonEU/EAA</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordCreates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Draft</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Account</objectType>
+    </variables>
+</Flow>

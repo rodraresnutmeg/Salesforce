@@ -1,0 +1,77 @@
+<aura:component description="AdviceFactFindLandingPage">
+
+    <aura:attribute name="text"             type="String"   default="" />
+    <aura:attribute name="caseId"           type="String"   default="" />
+
+    <aura:attribute name="isConsent"    type="Boolean"  default="true" />
+    <aura:attribute name="isStarted"    type="Boolean"  default="true" />
+    <aura:attribute name="isSubmitted"  type="Boolean"  default="false" />
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+    <aura:if isTrue="{!not(v.isStarted)}">
+        <div class="nk-container">
+            <div class="nk-row">
+                <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                    <section class="nk-panel nk-panel__space--inset--lg">
+                        <div class="nk-panel__body">
+                            <div class="" style="white-space: pre-wrap; font-size: 16pt;">
+                                {!v.text}
+                            </div>
+
+                            <div class="consent" style="display: flex; align-items: center; justify-content: center;">
+                                <lightning:input
+                                    type="checkbox"
+                                    class=""
+                                    label="I agree with that"
+                                    checked="{!v.isConsent}"
+                                    name="consent"
+                                />
+                            </div>
+
+                            <section class="nk-button-group nk-button-group--stack-up nk-button-group--center">
+                                <button class="nk-button nk-button--md nk-button--primary"
+                                        disabled="{!not(v.isConsent)}"
+                                        type="button"
+                                        onclick="{!c.start}"
+                                >
+                                    Start <!-- TODO move to label-->
+                                </button>
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!and(v.isStarted, not(v.isSubmitted))}">
+        <c:AdviceFactFindCmp
+            caseId="{!v.caseId}"
+            isSubmitted="{!v.isSubmitted}"
+        />
+    </aura:if>
+
+    <aura:if isTrue="{!and(v.isStarted, v.isSubmitted)}">
+        <div class="nk-container">
+            <div class="nk-row">
+                <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+                    <section class="nk-panel nk-panel__space--inset--lg">
+                        <div class="nk-panel__body" style="text-align: center; font-size: 16pt;">
+                            <c:svgCmp
+                                svgClass="nk-icon nk-icon--size-xxl nk-icon--color-nutmeg-green"
+                                type="s3"
+                            />
+
+                            <div style="padding: 20px 0; font-size: 1.5rem !important;">
+                                <span style="font-size: 2rem !important;">Thanks</span><br/>
+                                <div style="font-size: 2rem !important;">We'll be in touch shortly.</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+
+</aura:component>

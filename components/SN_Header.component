@@ -1,0 +1,18 @@
+<apex:component layout="none">
+  <div class="logo">
+    <a href="{!$Label.SN_Nutmeg_Marketing_Website}"><img src="{!$Label.SN_Nutmeg_Logo_URL}" alt="{!$Label.SN_Nutmeg}"/></a>
+    <!-- {{#link 'help_center' class='header-link header-support-link'}}
+      Support home
+    {{/link}} -->
+    <a class="header-link header-support-link" title="Home" href="{!URLFOR($Page.SN_Layout)}">{!$Label.SN_Support_Link_Name}</a>
+  </div>
+  <div class="nav-wrapper">
+    <span class="icon-menu"></span>
+    <nav class="user-nav" id="user-nav">
+      <a href="{!$Label.SN_Nutmeg_Marketing_Website}" class="header-link">{!$Label.SN_Back_to_Nutmeg_Link_Name}</a>
+      <!--{{link 'community'}}-->
+      <!--{{link 'new_request' class='submit-a-request'}}-->
+    </nav>
+    <!--{{user_info}}-->
+  </div>
+</apex:component>

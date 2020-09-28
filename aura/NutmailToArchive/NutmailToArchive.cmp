@@ -1,0 +1,60 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction" access="global" controller="NutmailToArchiveCtrl">
+
+  <aura:attribute name="isEmailMessageObjType" type="Boolean" default="false" />
+  <aura:attribute name="emailMessages" type="Object" />
+  <aura:attribute name="emailMessageTextBody" type="String" default="" />
+  <aura:attribute name="errorMessage" type="String" default="" />
+
+  <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+  <aura:if isTrue="{!empty(v.errorMessage)}">
+    <div class="slds-grid slds-wrap slds-m-top_x-small">
+      <div class="slds-col slds-size_1-of-3 slds-p-right_medium">
+        <lightning:select
+          aura:id="messageId"
+          name="messageId"
+          label="Message ID"
+          disabled="{!v.isEmailMessageObjType}"
+          onchange="{!c.onchangeMessageId}"
+        >
+          <aura:iteration items="{!v.emailMessages}" var="item">
+            <option value="{!item.MessageID__c}">{!item.MessageID__c}</option>
+          </aura:iteration>
+        </lightning:select>
+      </div>
+      <div class="slds-col slds-size_2-of-3">
+        <lightning:select
+          aura:id="subject"
+          name="subject"
+          label="Subject"
+          disabled="{!v.isEmailMessageObjType}"
+          onchange="{!c.onchangeSubject}"
+        >
+          <aura:iteration items="{!v.emailMessages}" var="item">
+            <option value="{!item.MessageID__c}">{!item.Subject}</option>
+          </aura:iteration>
+        </lightning:select>
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-m-top_x-small">
+        <lightning:textarea
+          name="textBody"
+          disabled="true"
+          value="{!v.emailMessageTextBody}"
+          label="Text Body"
+        />
+      </div>
+      <div class="slds-col slds-size_1-of-1 slds-m-top_medium slds-clearfix">
+        <div class="slds-float_right">
+          <lightning:button label="Hide Nutmail" title="Hide Nutmail" onclick="{!c.hideNutmail}"/>
+        </div>
+      </div>
+    </div>
+
+    <aura:set attribute="else">
+      <ui:message title="Error" severity="error" closable="true">
+        {!v.errorMessage}
+      </ui:message>
+    </aura:set>
+  </aura:if>
+
+</aura:component>

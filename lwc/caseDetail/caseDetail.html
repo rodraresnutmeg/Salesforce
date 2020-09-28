@@ -1,0 +1,200 @@
+<template>
+    <lightning-card  variant="Base" title="Case Detail" icon-name="standard:case">
+        <div if:true={caseRecordId} class="slds-p-horizontal_small">
+            <lightning-record-edit-form record-id={caseRecordId} object-api-name="Case" onsuccess={handleSuccess} onerror={handleError}>
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field field-name="CaseNumber" class="slds-form-element_readonly"></lightning-output-field>
+                    <lightning-output-field field-name="OwnerId" class="slds-form-element_readonly"></lightning-output-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field field-name="Status" class="slds-form-element_readonly"></lightning-output-field>
+                    <lightning-output-field field-name="Priority" class="slds-form-element_readonly"></lightning-output-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field if:false={isEditMode} field-name="Subject" class="slds-form-element_readonly"></lightning-output-field>
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon>
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Subject"></lightning-input-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field if:false={isEditMode} field-name="Description" class="slds-form-element_readonly"></lightning-output-field>
+
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon>
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Description"></lightning-input-field>
+                </div>
+
+                <lightning-output-field field-name="Your_Question__c" class="slds-form-element_readonly"></lightning-output-field>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field if:false={isEditMode} field-name="Sentiment_Analysis__c" class="slds-form-element_readonly"></lightning-output-field>
+
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon>
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Sentiment_Analysis__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field if:false={isEditMode} field-name="Type" class="slds-form-element_readonly"></lightning-output-field>
+
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon> 
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Type"></lightning-input-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field if:false={isEditMode} field-name="Category__c" class="slds-form-element_readonly"></lightning-output-field>
+
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon>
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Category__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-grid slds-gutters_small mdp cols-2 forcePageBlockSectionRow">
+                    <lightning-output-field  if:false={isEditMode} field-name="Sub_category__c" class="slds-form-element_readonly"></lightning-output-field>
+
+                    <p if:false={isEditMode} style="position: absolute; right: 0;">
+                        <lightning-button-icon
+                                icon-name="utility:edit"
+                                alternative-text="Edit"
+                                title="Edit"
+                                variant="container"
+                                class="slds-m-left_xx-small"
+                                onclick={handleEditMode}
+                        ></lightning-button-icon>
+                    </p>
+
+                    <lightning-input-field if:true={isEditMode} field-name="Sub_category__c"></lightning-input-field>
+                </div>
+
+                <div class="slds-align--absolute-center">
+                    <lightning-button
+                            if:true={isEditMode}
+                            variant="Neutral"
+                            class="slds-m-vertical--medium slds-m-right_small"
+                            label="Cancel"
+                            title="Cancel"
+                            onclick={handleEditMode}
+                    ></lightning-button>
+
+                    <lightning-button
+                            if:true={isEditMode}
+                            variant="Brand"
+                            class="slds-m-vertical--medium slds-m-right_small"
+                            type="submit"
+                            label="Save"
+                            title="Save"
+                    ></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+
+        <div if:false={caseRecordId}>
+            <div class="infoMessage slds-align--absolute-center slds-var-m-bottom_large slds-m-top--small">
+                No attached case
+            </div>
+        </div>
+
+        <div if:true={relatedCases}>
+            <div class="slds-align--absolute-center">
+                <lightning-button if:false={showRelatedCases}
+                    variant="Neutral"
+                    class="slds-m-vertical--medium slds-m-right_small"
+                    label="Find related cases"
+                    title="Find related cases"
+                    onclick={handleShowRelatedCases}
+                ></lightning-button>
+
+                <lightning-button if:true={showRelatedCases}
+                    variant="Neutral"
+                    class="slds-m-vertical--medium slds-m-right_small"
+                    label="Close related cases"
+                    title="Close related cases"
+                    onclick={handleShowRelatedCases}
+                ></lightning-button>
+
+                <lightning-button
+                    variant="Brand"
+                    class="slds-m-vertical--medium slds-m-right_small"
+                    label="Create new Case"
+                    title="Create new Case"
+                    onclick={handleCreateNewCase}
+                ></lightning-button>
+
+                <lightning-button
+                    variant="Destructive"
+                    class="slds-m-vertical--medium"
+                    label="Quick close"
+                    title="Quick close"
+                    onclick={handleCloseCase}
+                ></lightning-button>
+            </div>
+
+            <div if:true={showRelatedCases} class="slds-m-vertical_large">
+                <lightning-datatable
+                    key-field="Id"
+                    hide-checkbox-column
+                    data={relatedCases}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                ></lightning-datatable>
+            </div>
+        </div>
+
+        <div if:false={relatedCases}>
+            <div class="infoMessage slds-align--absolute-center slds-m-vertical_large">
+                No cases related to this account
+            </div>
+        </div>
+
+    </lightning-card>
+
+</template>

@@ -1,0 +1,44 @@
+<aura:component description="AdviceQuestionSpecific">
+
+    <aura:attribute name="questionData" type="Object"   default="" />
+    <aura:attribute name="answers"      type="List"     default="" />
+
+    <aura:handler name="init"   action="{!c.doInit}"        value="{!this}" />
+
+    <div style="padding: 10px; background-color: #a7d3f7;">
+        <span>
+            Answers:
+        </span>
+
+<!--        <aura:iteration items="{!v.questionData.innerAnswers}" var="answers" indexVar="index">-->
+
+<!--                <aura:iteration items="{!answers}" var="answer" indexVar="index2">-->
+<!--                    <aura:iteration items="{!answer}" var="innerAnswer" indexVar="index3">-->
+<!--                        <aura:iteration items="{!innerAnswer}" var="innerAnswer2" indexVar="index4">-->
+<!--                            {!innerAnswer2}-->
+<!--                        </aura:iteration>-->
+<!--                    </aura:iteration>-->
+<!--                </aura:iteration>-->
+
+        <div>
+            <aura:if isTrue="{!not(empty(v.answers))}">
+                <aura:iteration items="{!v.answers}" var="answer" indexVar="index">
+                    <div>
+                        {!index+1}: {!answer.label + ' - ' + answer.answer}
+
+                        <aura:if isTrue="{!answer.init}">
+                            <div style="padding-left: 40px;">
+                                <aura:iteration items="{!answer.init}" var="answerInit" indexVar="index2">
+                                    <div>
+                                        {!index+1 + '.' + (index2+1)}: {!answerInit.label + ' - ' + answerInit.answer}
+                                    </div>
+                                </aura:iteration>
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:iteration>
+            </aura:if>
+        </div>
+    </div>
+
+</aura:component>

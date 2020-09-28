@@ -1,0 +1,27 @@
+<aura:component
+        description="AdviceQuestionsViewer"
+        controller="FactFindCtrl"
+        implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:actionOverride"
+>
+
+    <aura:attribute name="allQuestions" type="Object"   default="{!null}" />
+    <aura:attribute name="isReadMode"   type="Boolean"  default="true" />
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+    <ltng:require styles="{!$Resource.Nutkit}"/>
+
+    <div style="background-color: #f7f7f7;">
+        <aura:if isTrue="{!not(empty(v.allQuestions))}">
+            <c:AdviceFactFindCmp
+                answerId="{!v.recordId}"
+                isReviewMode="true"
+                isReadMode="{!v.isReadMode}"
+                isPrepage="false"
+                allQuestions="{!v.allQuestions}"
+                loader="true"
+            />
+        </aura:if>
+    </div>
+
+</aura:component>

@@ -1,0 +1,18 @@
+<aura:component
+        description="Case Detail Widget"
+        implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+>
+
+    <aura:attribute name="isDisplayed" type="Boolean" default="true" />
+
+    <aura:handler event="force:refreshView" action="{!c.refreshCmp}" />
+
+    <aura:if isTrue="{!v.isDisplayed}">
+        <c:caseDetail
+                aura:id="caseDetailCmp"
+                recordId="{!v.recordId}"
+                onrecordChange="{!c.refreshView}"
+        ></c:caseDetail>
+    </aura:if>
+
+</aura:component>

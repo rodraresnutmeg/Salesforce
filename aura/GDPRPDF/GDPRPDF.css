@@ -1,0 +1,69 @@
+.THIS.slds-box {
+    border: 0px;
+}
+
+.THIS .mikron-body_height {
+   height: 600px;
+   min-height: 350px;
+}
+
+/*.THIS .mikron-search_dropdown {
+    height: 120px;
+    overflow: auto;
+}*/
+
+.THIS .mikron-button-margin {
+    margin: 20px;
+}
+
+.THIS .mikron-text-margin {
+    margin: 5px;
+}
+
+.THIS .mikron-image-margin {
+    margin: 5px;
+}
+
+.THIS tr.slds-hint-parent td {
+    width: 12.5% !important;
+}
+
+.THIS .btn {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.THIS .checked {
+    background-color: rgb(243, 242, 242) !important;
+}
+
+.THIS .testclass .slds-icon-text-default {
+    fill: rgb(0, 112, 210);
+}
+
+.THIS .inputWidth {
+    width: 500px !important;
+}
+
+.THIS .slds-form-element {
+    width: 100%;
+}
+
+.THIS .slds-form-element__control {
+    width: 100%;
+}
+
+.THIS .mikron-predifined-opp {
+    width: 700px;
+}
+
+.THIS .mikron-left-td {
+    width: 330px;
+    padding-right: 30px; 
+}
+
+.THIS .mikron-right-td {
+    width: 330px;
+    padding-left: 30px;
+}

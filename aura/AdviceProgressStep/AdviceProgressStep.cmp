@@ -1,0 +1,36 @@
+<aura:component description="AdviceProgressStep">
+
+    <aura:attribute name="status"       type="String"   default="s1"/>
+    <aura:attribute name="stepName"     type="String"   default=""  />
+    <aura:attribute name="stepIndex"    type="Integer"  default=""  />
+    <aura:attribute name="currentStep"  type="Integer"  default="null"  />
+
+    <aura:attribute name="svg"          type="Boolean"  default="true" />
+
+    <aura:attribute name="statusComplete"   type="String"   default="nk-progress-steps__step--is-complete"  />
+    <aura:attribute name="statusActive"     type="String"   default="nk-progress-steps__step--is-active"    />
+
+    <aura:handler name="change" action="{!c.handleCurrentStep}" value="{!v.currentStep}" />
+
+    <li onclick="{!c.changeStep}" class="{!'nk-progress-steps__step ' +
+        if(v.status=='s3',
+            v.statusComplete,
+            if(v.status=='s2',
+                v.statusActive,
+                ''
+            )
+        )
+    }">
+        <aura:if isTrue="{!v.svg}">
+            <c:svgCmp
+                type="{!v.status}"
+                svgClass="nk-icon nk-icon--size-md nk-icon--color-nutmeg-green"
+            />
+        </aura:if>
+
+        <span class="nk-progress-steps__step__label">
+            {!v.stepName}
+        </span>
+    </li>
+
+</aura:component>

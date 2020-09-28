@@ -1,0 +1,58 @@
+<aura:component description="AdviceQuestionDatePicklist">
+
+    <aura:attribute name="questionData"     type="Object"   default="" />
+
+    <aura:attribute name="day"              type="Integer"  default="" />
+    <aura:attribute name="month"            type="Integer"  default="" />
+    <aura:attribute name="year"             type="Integer"  default="" />
+
+    <aura:attribute name="dayList"          type="List"     default="" />
+    <aura:attribute name="monthList"        type="List"     default="" />
+    <aura:attribute name="yearList"         type="List"     default="" />
+
+    <aura:attribute name="isReadMode"       type="Boolean"  default="false" />
+
+    <aura:handler name="init"       action="{!c.doInit}"            value="{!this}"     />
+    <aura:handler name="change"     action="{!c.handleDateChange}"   value="{!v.day}"    />
+    <aura:handler name="change"     action="{!c.handleDateChange}" value="{!v.month}"  />
+    <aura:handler name="change"     action="{!c.handleDateChange}"  value="{!v.year}"   />
+
+    <div class="nk-row">
+        <div class="nk-input nk-col-4">
+            <lightning:select disabled="{!v.isReadMode}" name="day" value="{!v.day}" label="Day">
+                <option value=""></option>
+
+                <aura:iteration items="{!v.dayList}" var="item">
+                    <option value="{!item}">
+                        {!item}
+                    </option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+
+        <div class="nk-input nk-col-4">
+            <lightning:select disabled="{!v.isReadMode}" name="month" value="{!v.month}" label="Month">
+                <option value=""></option>
+
+                <aura:iteration items="{!v.monthList}" var="item">
+                    <option value="{!item}">
+                        {!item}
+                    </option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+
+        <div class="nk-input nk-col-4">
+            <lightning:select disabled="{!v.isReadMode}" name="year" value="{!v.year}" label="Year">
+                <option value=""></option>
+
+                <aura:iteration items="{!v.yearList}" var="item">
+                    <option value="{!item}">
+                        {!item}
+                    </option>
+                </aura:iteration>
+            </lightning:select>
+        </div>
+    </div>
+
+</aura:component>

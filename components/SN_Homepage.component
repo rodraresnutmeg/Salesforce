@@ -1,0 +1,108 @@
+<apex:component layout="none">
+  <section class="section hero grad-light-blue">
+    <h1>{!$Label.SN_How_can_we_help}</h1>
+    <div class="hero-inner ">
+      {{search submit=false instant=true class='search search-full'}}
+      <p class="popular-topics">
+        <strong>{!$Label.SN_Popular_Topics}</strong> 
+        <a href="{!$Label.SN_Popular_Topic_1_Link}">{!$Label.SN_Popular_Topic_1_Link_Name}</a>, 
+        <a href="{!$Label.SN_Popular_Topic_2_Link}">{!$Label.SN_Popular_Topic_2_Link_Name}</a>, 
+        <a href="{!$Label.SN_Popular_Topic_3_Link}">{!$Label.SN_Popular_Topic_3_Link_Name}</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="section knowledge-base">
+      <section class="categories blocks">
+        <ul class="blocks-list">
+          {{#each categories}}
+            {{#if ../has_multiple_categories}}
+              <li class="blocks-item">
+                {{link value1=id}} 
+                <a href='{!URLFOR($Page.SN_Layout, null, [category=TRIM(id)])}' class="blocks-item-link">
+                  <h4 class="blocks-item-title">{{name}} </h4>
+                  <p class="blocks-item-description">{{excerpt description}}</p>
+                </a>
+              </li>
+            {{else}}
+              {{#each sections}}
+                <li class="blocks-item {{#if internal}}blocks-item-internal{{/if}}">
+                  <a href='{!URLFOR($Page.SN_Layout)}{{url}}' class="blocks-item-link">
+                    <h4 class="blocks-item-title">
+                      {{name}} rest
+                      {{#if internal}}
+                        <span class="icon-lock" title="{{t 'internal'}}"></span>
+                      {{/if}}
+                    </h4>
+                    <p class="blocks-item-description">{{excerpt description}}</p>
+                  </a>
+                </li>
+              {{/each}}
+            {{/if}}
+          {{/each}}
+        </ul>
+        <!-- {{pagination}} -->
+      </section>
+      
+      <section class="section new-to-investing">
+        <h2>{!$Label.SN_New_to_Investing}</h2>
+          <ul class="article-list promoted-articles">
+            <li class="promoted-articles-item">
+              <a href="{!$Label.SN_New_to_Investing_1_Link}">{!$Label.SN_New_to_Investing_1_Link_Name}</a>
+            </li>
+            <li class="promoted-articles-item">
+              <a href="{!$Label.SN_New_to_Investing_2_Link}">{!$Label.SN_New_to_Investing_2_Link_Name}</a>
+            </li>
+            <li class="promoted-articles-item">
+              <a href="{!$Label.SN_New_to_Investing_3_Link}">{!$Label.SN_New_to_Investing_3_Link_Name}</a>
+            </li>
+            <li class="promoted-articles-item">
+              <a href="{!$Label.SN_New_to_Investing_4_Link}">{!$Label.SN_New_to_Investing_4_Link_Name}</a>
+            </li>
+        </ul>
+      </section>
+
+
+      {{#if promoted_articles}}
+        <section class="articles">
+          <h2>{!$Label.SN_Promoted_Articles}</h2>
+          <ul class="article-list promoted-articles">
+            {{#each promoted_articles}}
+              <li class="promoted-articles-item">
+                <a href="{!URLFOR($Page.SN_Layout)}{{url}}">
+                  {{title}}
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+      {{/if}}
+    </section>
+    
+    <section class="section contact-us">
+      <h2>{!$Label.SN_Contuct_Us}</h2>
+      <p>
+        <strong>{!$Label.SN_Phone_Label}</strong> <a href="{!$Label.SN_Phone_Link}">{!$Label.SN_Phone_Link_Name}</a> {!$Label.SN_Phone_Working_Hours}<br/>
+        <strong>{!$Label.SN_Nutmail}</strong> {!$Label.SN_Nutmail_Text}<br/>
+        <strong>{!$Label.SN_Email}</strong> <a href="{!$Label.SN_Email_Link}">{!$Label.SN_Email_Link_Name}</a>
+      </p>
+      <p><a href="{!URLFOR($Page.SN_Layout)}{!$Label.SN_More_Ways_Contact_Us_Link}">{!$Label.SN_More_Ways_Contact_Us_Link_Name}</a></p>
+    </section>
+
+    <!--{{#if help_center.community_enabled}}
+      <section class="section community">
+        <h2>{{t 'community'}}</h2>
+        {{#link 'community' class='community-link'}}
+          {{t 'join_conversation'}}
+        {{/link}}
+
+        <div class="community-image"></div>
+      </section>
+    {{/if}}-->
+
+    <!--<section class="section activity">
+      {{recent_activity}}
+    </section>-->
+  </div>
+</apex:component>

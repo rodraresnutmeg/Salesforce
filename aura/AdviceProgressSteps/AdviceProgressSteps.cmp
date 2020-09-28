@@ -1,0 +1,23 @@
+<aura:component description="AdviceProgressSteps">
+
+    <aura:attribute name="step"         type="Integer"  default="" />
+    <aura:attribute name="stepsList"    type="List"     default="" />
+
+    <div class="nk-row">
+        <div class="nk-col-md-12 nk-col-lg-8 offset-lg-2">
+            <div class="nk-progress-steps">
+                <ol class="nk-progress-steps__steps">
+                    <aura:iteration items="{!v.stepsList}" var="stepName" indexVar="index">
+                        <c:AdviceProgressStep
+                            stepIndex="{#index}"
+                            currentStep="{!v.step}"
+                            stepName="{!stepName}"
+                            status="{!if(equals(v.step, index),'s2', if(lessthan(v.step, index),'s1','s3'))}"
+                        />
+                    </aura:iteration>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</aura:component>
